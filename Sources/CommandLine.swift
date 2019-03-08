@@ -482,7 +482,9 @@ func processArguments(_ args: [String], in directory: String) -> ExitCode {
                             let output = try format(input, options: options, verbose: verbose)
                             if (try? String(contentsOf: outputURL)) != output {
                                 if dryrun {
-                                    print("Would have updated \(outputURL.path)", as: .info)
+                                    if verbose {
+                                        print("Would have updated \(outputURL.path).", as: .info)
+                                    }
                                 } else {
                                     do {
                                         try output.write(to: outputURL, atomically: true, encoding: .utf8)
@@ -754,7 +756,9 @@ func processInput(_ inputURLs: [URL],
                     }
                 }
                 if dryrun {
-                    print("Would have updated \(outputURL.path)", as: .info)
+                    if verbose {
+                        print("Would have updated \(outputURL.path)", as: .info)
+                    }
                     return {
                         outputFlags.filesChecked += 1
                         outputFlags.filesFailed += 1
